@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/bin/env python3 -m http.server 1337
+/bin/env python3 -m http.server 53035
