@@ -1,23 +1,31 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: './src/index.jsx',
+  entry: "./src/index.tsx",
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
       {
         test: /\.s[ac]ss$/i,
@@ -30,7 +38,6 @@ module.exports = {
           "sass-loader",
         ],
       },
-    ]
-  }  
+    ],
+  },
 };
-
