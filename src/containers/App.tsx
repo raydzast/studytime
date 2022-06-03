@@ -1,11 +1,18 @@
 import * as React from 'react';
 
-import StatusBar from '../components/StatusBar/index.jsx';
-import Table from './Table.jsx';
+import StatusBar from '../components/StatusBar/index';
+import Table from './Table';
+
+import { TStudyInfo } from '../types/StudyInfo';
 
 
-export default class App extends React.Component {
-    state = {
+type AppState = {
+    isLoading: boolean;
+    studyInfo: TStudyInfo | null;
+};
+
+export default class App extends React.Component<{}, AppState> {
+    state: AppState = {
         isLoading: true,
         studyInfo: null,
     };
@@ -13,7 +20,7 @@ export default class App extends React.Component {
     componentDidMount() {
         const studyInfoJson = localStorage.getItem("studyInfoJson");
 
-        const defaultStudyInfo = {disciplines: []};
+        const defaultStudyInfo = new TStudyInfo();
         const studyInfo = studyInfoJson === null ? defaultStudyInfo : JSON.parse(studyInfoJson);
 
         localStorage.setItem("studyInfoJson", JSON.stringify(studyInfo));
@@ -23,12 +30,9 @@ export default class App extends React.Component {
         });
     }
 
-    updateStudyInfo = (studyInfo) => {
-        localStorage.setItem()
-    }
-
     handleOpenClick = async () => {
         try {
+            // @ts-ignore
             const [fileHandler] = await window.showOpenFilePicker();
             const file = await fileHandler.getFile();
             const studyInfoJson = await file.text();
@@ -48,8 +52,13 @@ export default class App extends React.Component {
 
         return (
             <>
-                <Table studyInfo={this.state.studyInfo} />
-                <StatusBar studyInfo={this.state.studyInfo} onOpenClick={this.handleOpenClick}/>
+                <Table
+                    studyInfo={this.state.studyInfo}
+                />
+                <StatusBar
+                    studyInfo={this.state.studyInfo}
+                    onOpenClick={this.handleOpenClick}
+                />
             </>
         );
     }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 
-import App from "./containers/App.jsx";
+import App from "./containers/App";
 
 import "./styles/style.scss";
 import "./styles/colors.scss";

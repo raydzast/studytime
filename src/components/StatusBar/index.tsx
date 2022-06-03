@@ -1,12 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 
-import DateBlock from './DateBlock.jsx';
-import Stats from './Stats.jsx';
+import DateBlock from './DateBlock';
+import Stats from './Stats';
 
-import download from '../../utils/download.js';
+import { TStudyInfo } from '../../types/StudyInfo';
+
+import download from '../../utils/download';
 
 
-export default class StatusBar extends React.Component {
+type StatusBarProps = {
+    studyInfo: TStudyInfo;
+    onOpenClick: React.MouseEventHandler;
+}
+
+export default class StatusBar extends React.Component<StatusBarProps> {
     handleSaveClick = () => {
         download("data.json", JSON.stringify(this.props.studyInfo));
     }
