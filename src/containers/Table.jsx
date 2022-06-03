@@ -2,31 +2,51 @@ import * as React from 'react';
 import showdown from 'showdown';
 
 
-function Entry(props) {
-    const entry = props.entry;
+function Td({color, content}) {
     return <td
-        className={`${entry.color || "white"}-bg`}
-        dangerouslySetInnerHTML={{__html: new showdown.Converter().makeHtml(entry.content)}}
+        className={`${color || "white"}-bg`}
+        dangerouslySetInnerHTML={{__html: new showdown.Converter().makeHtml(content)}}
     />;
 }
 
 function Discipline(props) {
     const discipline = props.discipline;
+    const attributeNames = props.attributeNames || [];
     const scheduleSlots = props.scheduleSlots;
     const emptyEntries = scheduleSlots - discipline.schedule.length;
 
     return <tr>
+        <Td color={discipline.color} content={discipline.name} />
+        {
+            attributeNames.map((attributeName) => {
+                return <Td key={attributeName} content={discipline.attributes[attributeName]} />;
+            })
+        }
         {
             discipline.schedule.map((entry, idx) => {
-                return <Entry key={idx} entry={entry} />;
+                return <Td key={idx} {...entry} />;
             })
         }
         {
             [...Array(emptyEntries).keys()].map((idx) => {
-                return <Entry key={idx} entry={{}} />;
+                return <Td key={idx} />;
             })
         }
     </tr>;
+}
+
+function THead(props) {
+    return <thead>
+        <tr>
+            <th>Дисциплина</th>
+            {
+                props.studyInfo.attributeNames.map(attributeName => {
+                    return <th key={attributeName}>{attributeName}</th>;
+                })
+            }
+            <th>Список</th>
+        </tr>
+    </thead>;
 }
 
 function TBody(props) {
@@ -36,7 +56,12 @@ function TBody(props) {
     return <tbody>
         {
             disciplines.map((discipline, idx) => {
-                return <Discipline key={idx} discipline={discipline} scheduleSlots={scheduleSlots} />;
+                return <Discipline
+                    key={idx}
+                    discipline={discipline}
+                    scheduleSlots={scheduleSlots}
+                    attributeNames={props.studyInfo.attributeNames}
+                />;
             })
         }
     </tbody>;
@@ -44,6 +69,7 @@ function TBody(props) {
 
 export default function Table(props) {
     return <table>
-            <TBody studyInfo={props.studyInfo} />
+        <THead studyInfo={props.studyInfo} />
+        <TBody studyInfo={props.studyInfo} />
     </table>;
 }
