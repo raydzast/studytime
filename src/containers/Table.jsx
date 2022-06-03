@@ -38,13 +38,13 @@ function Discipline(props) {
 function THead(props) {
     return <thead>
         <tr>
-            <th>Дисциплина</th>
+            <th><p>Дисциплина</p></th>
             {
                 props.studyInfo.attributeNames.map(attributeName => {
-                    return <th key={attributeName}>{attributeName}</th>;
+                    return <th key={attributeName}><p>{attributeName}</p></th>;
                 })
             }
-            <th>Список</th>
+            <th><p>Список</p></th>
         </tr>
     </thead>;
 }
