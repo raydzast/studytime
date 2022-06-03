@@ -1,39 +1,40 @@
 .status-bar {
-    position: fixed;
-    bottom: 5px;
-    right: 5px;
-    font-size: 14px;
-    font-family: monospace;
-    line-height: 14px;
-    box-sizing: border-box;
-    color: white;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  font-size: 14px;
+  font-family: monospace;
+  line-height: 14px;
+  box-sizing: border-box;
+  color: white;
 }
 
-body, html {
-    margin: 0;
-    text-align: left;
-    font-family: 'Arial';
-    font-size: 12px;
+body,
+html {
+  margin: 0;
+  text-align: left;
+  font-family: "Arial";
+  font-size: 12px;
 }
 
-a:visited{
-  color:blue;
+a:visited {
+  color: blue;
 }
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 table tr {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }
-table tbody>tr:last-child {
-    border-bottom: none;
+table tbody > tr:last-child {
+  border-bottom: none;
 }
 table th,
 table td {
-    border-right: 1px solid black;
+  border-right: 1px solid black;
 }
 table th:last-child,
 table td:last-child {
-    border-right: none;
+  border-right: none;
 }
