@@ -2,13 +2,34 @@ import * as React from "react";
 
 import { TStudyInfo } from "../../types/StudyInfo";
 
-const statColors = ["white", "green", "orange", "red"];
+const COLORS = ["white", "green", "orange", "red"];
 
-function calcStats(studyInfo: TStudyInfo) {
+type Props = {
+  studyInfo: TStudyInfo;
+};
+
+function Stats({ studyInfo }: Props) {
+  const stats = calcStats(studyInfo);
+
+  return (
+    <div className="black-bg">
+      {COLORS.map((color, idx) => (
+        <React.Fragment key={color}>
+          {idx === 0 || "/"}
+          <span className={`${color}-color`}>{stats[color] || 0}</span>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
+export { Stats };
+
+function calcStats({ disciplines }: TStudyInfo) {
   const stats: { [id: string]: number } = {};
 
-  for (const discipline of studyInfo.disciplines) {
-    for (const entry of discipline.schedule) {
+  for (const { schedule } of disciplines) {
+    for (const entry of schedule) {
       const color = entry.color || "white";
       if (!stats.hasOwnProperty(color)) {
         stats[color] = 0;
@@ -18,25 +39,4 @@ function calcStats(studyInfo: TStudyInfo) {
   }
 
   return stats;
-}
-
-type StatsProps = {
-  studyInfo: TStudyInfo;
-};
-
-export default function Stats({ studyInfo }: StatsProps) {
-  const stats = calcStats(studyInfo);
-
-  return (
-    <div className="black-bg">
-      {statColors.map((color, idx) => {
-        return (
-          <React.Fragment key={color}>
-            {idx === 0 || "/"}
-            <span className={`${color}-color`}>{stats[color] || 0}</span>
-          </React.Fragment>
-        );
-      })}
-    </div>
-  );
 }

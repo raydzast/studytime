@@ -1,4 +1,4 @@
-export default function download(filename: string, text: string) {
+function download(filename: string, text: string) {
   var element = document.createElement("a");
   element.setAttribute(
     "href",
@@ -13,3 +13,5 @@ export default function download(filename: string, text: string) {
 
   document.body.removeChild(element);
 }
+
+export { download };

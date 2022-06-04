@@ -38,3 +38,49 @@ table th:last-child,
 table td:last-child {
   border-right: none;
 }
+
+.color-button {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  margin: 2px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-weight: bold;
+  box-sizing: border-box;
+  border: 2px solid white;
+}
+
+.color-button.active {
+  border: 2px solid rgba(127, 127, 127, 0.5);
+}
+
+.color-picker {
+  display: flex;
+}
+
+.modal-wrapper {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal-background {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background:rgba(127, 127, 127, 0.5);
+}
+
+.modal-container {
+  z-index: 1;
+}
