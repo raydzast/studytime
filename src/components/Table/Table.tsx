@@ -6,14 +6,15 @@ import { THead } from "./THead";
 
 type Props = {
   studyInfo: TStudyInfo;
-  showModal: (a: React.ReactNode) => void;
+  showModal: (renderChildren: () => React.ReactNode) => void;
+  onChange: (newStudyInfo: TStudyInfo) => void;
 };
 
-function Table({ studyInfo, showModal }: Props) {
+function Table({ studyInfo, showModal, onChange }: Props) {
   return (
     <table>
       <THead attributeNames={studyInfo.attributeNames} />
-      <TBody studyInfo={studyInfo} showModal={showModal} />
+      <TBody studyInfo={studyInfo} showModal={showModal} onChange={onChange} />
     </table>
   );
 }

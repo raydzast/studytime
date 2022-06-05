@@ -11,15 +11,15 @@ type AppState = {
   isLoading: boolean;
   studyInfo: TStudyInfo | null;
   showModal: boolean;
-  modalContents: React.ReactNode;
+  renderModalChildren: () => React.ReactNode;
 };
 
 class App extends React.Component<{}, AppState> {
-  state: AppState = {
+  readonly state: AppState = {
     isLoading: true,
     showModal: false,
     studyInfo: null,
-    modalContents: null,
+    renderModalChildren: () => null,
   };
 
   componentDidMount() {
@@ -54,10 +54,10 @@ class App extends React.Component<{}, AppState> {
     download("data.json", JSON.stringify(this.state.studyInfo));
   };
 
-  showModal = (contents: React.ReactNode) => {
+  showModal = (renderChildren: () => React.ReactNode) => {
     this.setState({
       showModal: true,
-      modalContents: contents,
+      renderModalChildren: renderChildren,
     });
   };
 
@@ -67,21 +67,31 @@ class App extends React.Component<{}, AppState> {
     });
   };
 
+  handleStudyInfoChange = (newStudyInfo: TStudyInfo) => {
+    this.setState({
+      studyInfo: newStudyInfo,
+    });
+  };
+
   render() {
     if (this.state.isLoading) {
       return <h1>Loading...</h1>;
     }
-
+    console.log("app render");
     return (
       <>
-        <Table studyInfo={this.state.studyInfo} showModal={this.showModal} />
+        <Table
+          studyInfo={this.state.studyInfo}
+          showModal={this.showModal}
+          onChange={this.handleStudyInfoChange}
+        />
         <StatusBar
           studyInfo={this.state.studyInfo}
           onOpenClick={this.handleOpenClick}
           onSaveClick={this.handleSaveClick}
         />
         <Modal show={this.state.showModal} onHide={this.hideModal}>
-          {this.state.modalContents}
+          {this.state.renderModalChildren()}
         </Modal>
       </>
     );

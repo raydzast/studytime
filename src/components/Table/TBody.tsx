@@ -5,13 +5,16 @@ import { Discipline } from "./Discipline";
 
 type Props = {
   studyInfo: TStudyInfo;
-  showModal: (a: React.ReactNode) => void;
+  showModal: (renderChildren: () => React.ReactNode) => void;
+  onChange: (newStudyInfo: TStudyInfo) => void;
 };
 
 function TBody({
-  studyInfo: { disciplines, attributeNames },
+  studyInfo,
   showModal,
+  onChange,
 }: Props) {
+  const { disciplines, attributeNames } = studyInfo;
   const scheduleSlots = Math.max(
     0,
     ...disciplines.map((discipline) => discipline.schedule.length)
@@ -26,6 +29,10 @@ function TBody({
           scheduleSlots={scheduleSlots}
           attributeNames={attributeNames}
           showModal={showModal}
+          onChange={(newDiscipline) => {
+            studyInfo.disciplines[idx] = newDiscipline;
+            onChange(studyInfo);
+          }}
         />
       ))}
     </tbody>

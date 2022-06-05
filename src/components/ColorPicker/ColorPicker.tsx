@@ -3,11 +3,13 @@ import * as React from "react";
 import { ColorButton } from "./ColorButton";
 
 const COLORS = ["white", "green", "orange", "red"];
-const DEFAULT_COLOR = "white";
 
-function ColorPicker() {
-  const [color, setColor] = React.useState(DEFAULT_COLOR);
+type Props = {
+  color: string;
+  onChange: (newColor: string) => void;
+};
 
+function ColorPicker({ color, onChange }: Props) {
   return (
     <div className="color-picker">
       {COLORS.map((currentColor) => (
@@ -15,7 +17,7 @@ function ColorPicker() {
           key={currentColor}
           color={currentColor}
           active={currentColor == color}
-          onClick={() => setColor(currentColor)}
+          onClick={() => onChange(currentColor)}
         />
       ))}
     </div>
