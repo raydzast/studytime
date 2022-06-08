@@ -27,6 +27,7 @@ class DisciplineRow extends React.Component<Props> {
 
     return discipline.schedule.map((entry, idx) => (
       <EditableTableCell
+        key={idx}
         entry={entry}
         showModal={showModal}
         hideModal={hideModal}
