@@ -9,6 +9,7 @@ type Props = {
   onChange: (newValue: TTableCellValue) => void;
   onDelete?: () => void;
   hideModal: () => void;
+  withColor?: boolean;
 };
 
 type State = TTableCellValue;
@@ -33,13 +34,16 @@ class TableCellDialog extends React.Component<Props, State> {
   render() {
     const { onDelete, hideModal } = this.props;
     const { color, content } = this.state || {};
+    const withColor = this.props.withColor !== false;
 
     return (
       <>
-        <ColorPicker
-          color={color || "white"}
-          onChange={(newColor) => this.setState({ color: newColor })}
-        />
+        {withColor === true && (
+          <ColorPicker
+            color={color || "white"}
+            onChange={(newColor) => this.setState({ color: newColor })}
+          />
+        )}
         <textarea
           value={content || ""}
           onChange={(event) => this.setState({ content: event.target.value })}

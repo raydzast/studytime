@@ -17,11 +17,19 @@ type Props = {
 
 class DisciplineRow extends React.Component<Props> {
   renderAttributeCells = () => {
-    const { discipline, attributeNames } = this.props;
+    const { discipline, attributeNames, showModal, hideModal, onChange } =
+      this.props;
     return attributeNames.map((attributeName) => (
-      <TableCell
+      <EditableTableCell
         key={attributeName}
         value={{ content: discipline.attributes[attributeName] }}
+        showModal={showModal}
+        hideModal={hideModal}
+        onChange={(newValue) => {
+          discipline.attributes[attributeName] = newValue.content;
+          onChange(discipline);
+        }}
+        withColor={false}
       />
     ));
   };

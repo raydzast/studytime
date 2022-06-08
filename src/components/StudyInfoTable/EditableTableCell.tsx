@@ -10,12 +10,14 @@ type Props = {
   showModal: (renderChildren: () => React.ReactNode) => void;
   hideModal: () => void;
   onChange: (newValue: TTableCellValue) => void;
-  onDelete: () => void;
+  onDelete?: () => void;
+  withColor?: boolean;
 };
 
 class EditableTableCell extends React.Component<Props> {
   handleContextMenu = (event: React.MouseEvent) => {
-    const { value, showModal, hideModal, onChange, onDelete } = this.props;
+    const { value, showModal, hideModal, onChange, onDelete, withColor } =
+      this.props;
     event.preventDefault();
 
     showModal(() => (
@@ -24,6 +26,7 @@ class EditableTableCell extends React.Component<Props> {
         onChange={onChange}
         hideModal={hideModal}
         onDelete={onDelete}
+        withColor={withColor}
       />
     ));
   };
