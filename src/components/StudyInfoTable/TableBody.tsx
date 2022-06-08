@@ -26,11 +26,15 @@ function TableBody({ studyInfo, showModal, hideModal, onChange }: Props) {
           scheduleSlotCount={scheduleSlotCount}
           attributeNames={attributeNames}
           showModal={showModal}
+          hideModal={hideModal}
           onChange={(newDiscipline) => {
             studyInfo.disciplines[idx] = newDiscipline;
             onChange(studyInfo);
           }}
-          hideModal={hideModal}
+          onDelete={() => {
+            studyInfo.disciplines.splice(idx, 1);
+            onChange(studyInfo);
+          }}
         />
       ))}
     </tbody>

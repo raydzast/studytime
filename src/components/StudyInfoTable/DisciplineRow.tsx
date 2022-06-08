@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { TDiscipline, TScheduleEntry } from "../../types/StudyInfo";
+import { TDiscipline } from "../../types/StudyInfo";
 import { EditableTableCell } from "./EditableTableCell";
-import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
+import { TableCellDialog } from "./TableCellDialog";
 import { TableCell } from "./TableCell";
 
 type Props = {
@@ -12,13 +12,17 @@ type Props = {
   showModal: (renderChildren: () => React.ReactNode) => void;
   hideModal: () => void;
   onChange: (discipline: TDiscipline) => void;
+  onDelete: () => void;
 };
 
 class DisciplineRow extends React.Component<Props> {
   renderAttributeCells = () => {
     const { discipline, attributeNames } = this.props;
     return attributeNames.map((attributeName) => (
-      <TableCell key={attributeName} content={discipline.attributes[attributeName]} />
+      <TableCell
+        key={attributeName}
+        value={{ content: discipline.attributes[attributeName] }}
+      />
     ));
   };
 
@@ -28,7 +32,7 @@ class DisciplineRow extends React.Component<Props> {
     return discipline.schedule.map((entry, idx) => (
       <EditableTableCell
         key={idx}
-        entry={entry}
+        value={entry}
         showModal={showModal}
         hideModal={hideModal}
         onChange={(newEntry) => {
@@ -55,8 +59,7 @@ class DisciplineRow extends React.Component<Props> {
     const { discipline, showModal, hideModal, onChange } = this.props;
 
     showModal(() => (
-      <ScheduleEntryDialog
-        entry={new TScheduleEntry()}
+      <TableCellDialog
         onChange={(newEntry) => {
           discipline.schedule.push(newEntry);
           onChange(discipline);
@@ -67,15 +70,27 @@ class DisciplineRow extends React.Component<Props> {
   };
 
   render() {
-    const { discipline } = this.props;
+    const { discipline, showModal, hideModal, onChange, onDelete } = this.props;
 
     return (
       <tr>
-        <TableCell color={discipline.color} content={discipline.name} />
+        <EditableTableCell
+          value={{ color: discipline.color, content: discipline.name }}
+          showModal={showModal}
+          hideModal={hideModal}
+          onChange={(newValue) => {
+            discipline.color = newValue.color;
+            discipline.name = newValue.content;
+            onChange(discipline);
+          }}
+          onDelete={onDelete}
+        />
         {this.renderAttributeCells()}
         {this.renderScheduleEntries()}
+        <td className="add-entry-button" onClick={this.handleAddClick}>
+          +
+        </td>
         {this.renderEmptyEntries()}
-        <td className="add-entry-button" onClick={this.handleAddClick}>+</td>
       </tr>
     );
   }

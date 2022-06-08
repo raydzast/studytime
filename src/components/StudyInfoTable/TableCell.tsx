@@ -1,13 +1,14 @@
 import * as React from "react";
 import * as showdown from "showdown";
 
-import { TScheduleEntry } from "../../types/StudyInfo";
+import { TTableCellValue } from "./types";
 
-type Props = TScheduleEntry & {
+type Props = {
+  value?: TTableCellValue;
   onContextMenu?: React.MouseEventHandler;
 };
 
-function TableCell({ color, content, onContextMenu }: Props) {
+function TableCell({ value: { color, content }, onContextMenu }: Props) {
   return (
     <td
       onContextMenu={onContextMenu}

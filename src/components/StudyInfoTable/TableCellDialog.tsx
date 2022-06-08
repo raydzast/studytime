@@ -2,19 +2,19 @@ import * as React from "react";
 
 import { ColorPicker } from "../ColorPicker";
 
-import { TScheduleEntry } from "../../types/StudyInfo";
+import { TTableCellValue } from "./types";
 
 type Props = {
-  entry: TScheduleEntry;
-  onChange: (newEntry: TScheduleEntry) => void;
+  value?: TTableCellValue;
+  onChange: (newValue: TTableCellValue) => void;
   onDelete?: () => void;
   hideModal: () => void;
 };
 
-type State = TScheduleEntry;
+type State = TTableCellValue;
 
-class ScheduleEntryDialog extends React.Component<Props, State> {
-  readonly state: State = this.props.entry;
+class TableCellDialog extends React.Component<Props, State> {
+  readonly state: State = this.props.value;
 
   handleApplyClick = () => {
     const { onChange, hideModal } = this.props;
@@ -32,16 +32,16 @@ class ScheduleEntryDialog extends React.Component<Props, State> {
 
   render() {
     const { onDelete, hideModal } = this.props;
-    const { color, content } = this.state;
+    const { color, content } = this.state || {};
 
     return (
       <>
         <ColorPicker
-          color={color}
+          color={color || "white"}
           onChange={(newColor) => this.setState({ color: newColor })}
         />
         <textarea
-          value={content}
+          value={content || ""}
           onChange={(event) => this.setState({ content: event.target.value })}
         />
         <br />
@@ -53,4 +53,4 @@ class ScheduleEntryDialog extends React.Component<Props, State> {
   }
 }
 
-export { ScheduleEntryDialog };
+export { TableCellDialog };
