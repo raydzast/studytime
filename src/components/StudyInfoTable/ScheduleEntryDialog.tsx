@@ -7,6 +7,7 @@ import { TScheduleEntry } from "../../types/StudyInfo";
 type Props = {
   entry: TScheduleEntry;
   onChange: (newEntry: TScheduleEntry) => void;
+  onDelete?: () => void;
   hideModal: () => void;
 };
 
@@ -22,7 +23,15 @@ class ScheduleEntryDialog extends React.Component<Props, State> {
     hideModal();
   };
 
+  handleDeleteClick = () => {
+    const { onDelete, hideModal } = this.props;
+
+    onDelete();
+    hideModal();
+  };
+
   render() {
+    const { onDelete, hideModal } = this.props;
     const { color, content } = this.state;
 
     return (
@@ -37,7 +46,8 @@ class ScheduleEntryDialog extends React.Component<Props, State> {
         />
         <br />
         <button onClick={this.handleApplyClick}>Apply</button>
-        <button onClick={this.props.hideModal}>Cancel</button>
+        <button onClick={hideModal}>Cancel</button>
+        {onDelete && <button onClick={this.handleDeleteClick}>Delete</button>}
       </>
     );
   }

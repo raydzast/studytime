@@ -34,6 +34,10 @@ class DisciplineRow extends React.Component<Props> {
           discipline.schedule[idx] = newEntry;
           onChange(discipline);
         }}
+        onDelete={() => {
+          discipline.schedule.splice(idx, 1);
+          onChange(discipline);
+        }}
       />
     ));
   };
