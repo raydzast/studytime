@@ -3,7 +3,7 @@ import * as React from "react";
 import { TDiscipline, TScheduleEntry } from "../../types/StudyInfo";
 import { ScheduleEntryCell } from "./ScheduleEntryCell";
 import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
-import { Td } from "./Td";
+import { TableCell } from "./TableCell";
 
 type Props = {
   discipline: TDiscipline;
@@ -18,7 +18,7 @@ class DisciplineRow extends React.Component<Props> {
   renderAttributeCells = () => {
     const { discipline, attributeNames } = this.props;
     return attributeNames.map((attributeName) => (
-      <Td key={attributeName} content={discipline.attributes[attributeName]} />
+      <TableCell key={attributeName} content={discipline.attributes[attributeName]} />
     ));
   };
 
@@ -46,7 +46,7 @@ class DisciplineRow extends React.Component<Props> {
     const { discipline, scheduleSlotCount } = this.props;
 
     return [...Array(scheduleSlotCount - discipline.schedule.length)].map(
-      (_, idx) => <Td key={idx} />
+      (_, idx) => <TableCell key={idx} />
     );
   };
 
@@ -70,7 +70,7 @@ class DisciplineRow extends React.Component<Props> {
 
     return (
       <tr>
-        <Td color={discipline.color} content={discipline.name} />
+        <TableCell color={discipline.color} content={discipline.name} />
         {this.renderAttributeCells()}
         {this.renderScheduleEntries()}
         {this.renderEmptyEntries()}

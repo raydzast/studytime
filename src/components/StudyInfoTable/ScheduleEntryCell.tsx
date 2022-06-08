@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
-import { Td } from "./Td";
+import { TableCell } from "./TableCell";
 
 import { TScheduleEntry } from "../../types/StudyInfo";
 
@@ -29,7 +29,7 @@ class ScheduleEntryCell extends React.Component<Props> {
   };
 
   render() {
-    return <Td onContextMenu={this.handleContextMenu} {...this.props.entry} />;
+    return <TableCell onContextMenu={this.handleContextMenu} {...this.props.entry} />;
   }
 }
 

@@ -19,4 +19,4 @@ function TableCell({ color, content, onContextMenu }: Props) {
   );
 }
 
-export { TableCell as Td };
+export { TableCell };
