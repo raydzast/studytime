@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { TDiscipline, TScheduleEntry } from "../../types/StudyInfo";
-import { ScheduleEntryCell } from "./ScheduleEntryCell";
+import { EditableTableCell } from "./EditableTableCell";
 import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
 import { TableCell } from "./TableCell";
 
@@ -26,7 +26,7 @@ class DisciplineRow extends React.Component<Props> {
     const { discipline, showModal, hideModal, onChange } = this.props;
 
     return discipline.schedule.map((entry, idx) => (
-      <ScheduleEntryCell
+      <EditableTableCell
         entry={entry}
         showModal={showModal}
         hideModal={hideModal}

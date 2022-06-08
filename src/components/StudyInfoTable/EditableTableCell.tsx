@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
 import { TableCell } from "./TableCell";
+import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
 
 import { TScheduleEntry } from "../../types/StudyInfo";
 
@@ -10,12 +10,12 @@ type Props = {
   showModal: (renderChildren: () => React.ReactNode) => void;
   hideModal: () => void;
   onChange: (newEntry: TScheduleEntry) => void;
-  onDelete?: () => void;
+  onDelete: () => void;
 };
 
-class ScheduleEntryCell extends React.Component<Props> {
+class EditableTableCell extends React.Component<Props> {
   handleContextMenu = (event: React.MouseEvent) => {
-    const { entry, showModal, onChange, onDelete, hideModal } = this.props;
+    const { entry, showModal, hideModal, onChange, onDelete } = this.props;
     event.preventDefault();
 
     showModal(() => (
@@ -29,8 +29,10 @@ class ScheduleEntryCell extends React.Component<Props> {
   };
 
   render() {
-    return <TableCell onContextMenu={this.handleContextMenu} {...this.props.entry} />;
+    return (
+      <TableCell onContextMenu={this.handleContextMenu} {...this.props.entry} />
+    );
   }
 }
 
-export { ScheduleEntryCell };
+export { EditableTableCell };
