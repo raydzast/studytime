@@ -1,7 +1,8 @@
 import * as React from "react";
 
-import { TDiscipline } from "../../types/StudyInfo";
+import { TDiscipline, TScheduleEntry } from "../../types/StudyInfo";
 import { ScheduleEntryCell } from "./ScheduleEntryCell";
+import { ScheduleEntryDialog } from "./ScheduleEntryDialog";
 import { Td } from "./Td";
 
 type Props = {
@@ -45,6 +46,21 @@ class DisciplineRow extends React.Component<Props> {
     );
   };
 
+  handleAddClick = () => {
+    const { discipline, showModal, hideModal, onChange } = this.props;
+
+    showModal(() => (
+      <ScheduleEntryDialog
+        entry={new TScheduleEntry()}
+        onChange={(newEntry) => {
+          discipline.schedule.push(newEntry);
+          onChange(discipline);
+        }}
+        hideModal={hideModal}
+      />
+    ));
+  };
+
   render() {
     const { discipline } = this.props;
 
@@ -54,6 +70,7 @@ class DisciplineRow extends React.Component<Props> {
         {this.renderAttributeCells()}
         {this.renderScheduleEntries()}
         {this.renderEmptyEntries()}
+        <td className="add-entry-button" onClick={this.handleAddClick}>+</td>
       </tr>
     );
   }

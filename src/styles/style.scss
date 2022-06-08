@@ -78,9 +78,18 @@ table td:last-child {
   bottom: 0;
   left: 0;
   right: 0;
-  background:rgba(127, 127, 127, 0.5);
+  background: rgba(127, 127, 127, 0.5);
 }
 
 .modal-container {
   z-index: 1;
+}
+
+.add-entry-button {
+  width: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
 }
