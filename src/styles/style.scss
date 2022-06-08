@@ -85,8 +85,9 @@ table td:last-child {
   z-index: 1;
 }
 
-.add-entry-button {
-  width: 30px;
+.table-add-button {
+  min-width: 30px;
+  min-height: 30px;
   text-align: center;
   font-weight: bold;
   font-size: 20px;

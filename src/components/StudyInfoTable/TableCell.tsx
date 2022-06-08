@@ -8,7 +8,9 @@ type Props = {
   onContextMenu?: React.MouseEventHandler;
 };
 
-function TableCell({ value: { color, content }, onContextMenu }: Props) {
+function TableCell({ value, onContextMenu }: Props) {
+  const { color, content } = value || {};
+  
   return (
     <td
       onContextMenu={onContextMenu}

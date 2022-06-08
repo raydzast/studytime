@@ -87,7 +87,7 @@ class DisciplineRow extends React.Component<Props> {
         />
         {this.renderAttributeCells()}
         {this.renderScheduleEntries()}
-        <td className="add-entry-button" onClick={this.handleAddClick}>
+        <td className="table-add-button" onClick={this.handleAddClick}>
           +
         </td>
         {this.renderEmptyEntries()}
