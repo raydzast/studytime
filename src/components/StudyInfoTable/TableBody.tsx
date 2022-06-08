@@ -1,42 +1,40 @@
 import * as React from "react";
 
 import { TStudyInfo } from "../../types/StudyInfo";
-import { Discipline } from "./Discipline";
+import { DisciplineRow } from "./DisciplineRow";
 
 type Props = {
   studyInfo: TStudyInfo;
   showModal: (renderChildren: () => React.ReactNode) => void;
+  hideModal: () => void;
   onChange: (newStudyInfo: TStudyInfo) => void;
 };
 
-function TBody({
-  studyInfo,
-  showModal,
-  onChange,
-}: Props) {
+function TableBody({ studyInfo, showModal, hideModal, onChange }: Props) {
   const { disciplines, attributeNames } = studyInfo;
-  const scheduleSlots = Math.max(
-    0,
-    ...disciplines.map((discipline) => discipline.schedule.length)
-  );
+  const scheduleSlotCount =
+    disciplines.length === 0
+      ? 0
+      : Math.max(...disciplines.map(({ schedule }) => schedule.length));
 
   return (
     <tbody>
       {disciplines.map((discipline, idx) => (
-        <Discipline
+        <DisciplineRow
           key={idx}
           discipline={discipline}
-          scheduleSlots={scheduleSlots}
+          scheduleSlotCount={scheduleSlotCount}
           attributeNames={attributeNames}
           showModal={showModal}
           onChange={(newDiscipline) => {
             studyInfo.disciplines[idx] = newDiscipline;
             onChange(studyInfo);
           }}
+          hideModal={hideModal}
         />
       ))}
     </tbody>
   );
 }
 
-export { TBody };
+export { TableBody };

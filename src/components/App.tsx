@@ -1,11 +1,10 @@
 import * as React from "react";
 
 import { StatusBar } from "./StatusBar";
-import { Table } from "./Table";
+import { StudyInfoTable } from "./StudyInfoTable";
 import { Modal } from "./Modal";
 
 import { TStudyInfo } from "../types/StudyInfo";
-import { download } from "../utils/download";
 
 type AppState = {
   isLoading: boolean;
@@ -25,15 +24,20 @@ class App extends React.Component<{}, AppState> {
   componentDidMount() {
     const studyInfoJson = localStorage.getItem("studyInfoJson");
 
-    const defaultStudyInfo = new TStudyInfo();
-    const studyInfo =
-      studyInfoJson === null ? defaultStudyInfo : JSON.parse(studyInfoJson);
+    let studyInfo = null;
+    try {
+      studyInfo = JSON.parse(studyInfoJson);
+    } catch (e) {
+      if (e instanceof SyntaxError) {
+        console.warn("StudyInfo from `localStorage` is corrupted", e);
+      }
+    }
+    if (studyInfo === null) {
+      studyInfo = new TStudyInfo();
+    }
 
-    localStorage.setItem("studyInfoJson", JSON.stringify(studyInfo));
-    this.setState({
-      isLoading: false,
-      studyInfo: studyInfo,
-    });
+    this.handleStudyInfoChange(studyInfo);
+    this.setState({ isLoading: false });
   }
 
   handleOpenClick = async () => {
@@ -43,15 +47,14 @@ class App extends React.Component<{}, AppState> {
       const file = await fileHandler.getFile();
       const studyInfoJson = await file.text();
 
-      localStorage.setItem("studyInfoJson", studyInfoJson);
-      this.setState({
-        studyInfo: JSON.parse(studyInfoJson),
-      });
-    } catch (e) {}
+      this.handleStudyInfoChange(JSON.parse(studyInfoJson));
+    } catch (e) {
+      alert("Cannot read file");
+    }
   };
 
   handleSaveClick = () => {
-    download("data.json", JSON.stringify(this.state.studyInfo));
+    saveFile("data.json", JSON.stringify(this.state.studyInfo));
   };
 
   showModal = (renderChildren: () => React.ReactNode) => {
@@ -68,6 +71,7 @@ class App extends React.Component<{}, AppState> {
   };
 
   handleStudyInfoChange = (newStudyInfo: TStudyInfo) => {
+    localStorage.setItem("studyInfoJson", JSON.stringify(newStudyInfo));
     this.setState({
       studyInfo: newStudyInfo,
     });
@@ -77,12 +81,13 @@ class App extends React.Component<{}, AppState> {
     if (this.state.isLoading) {
       return <h1>Loading...</h1>;
     }
-    console.log("app render");
+
     return (
       <>
-        <Table
+        <StudyInfoTable
           studyInfo={this.state.studyInfo}
           showModal={this.showModal}
+          hideModal={this.hideModal}
           onChange={this.handleStudyInfoChange}
         />
         <StatusBar
@@ -99,3 +104,19 @@ class App extends React.Component<{}, AppState> {
 }
 
 export { App };
+
+function saveFile(filename: string, text: string) {
+  var element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:application/json;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}

@@ -7,7 +7,7 @@ type Props = TScheduleEntry & {
   onContextMenu?: React.MouseEventHandler;
 };
 
-function Td({ color, content, onContextMenu }: Props) {
+function TableCell({ color, content, onContextMenu }: Props) {
   return (
     <td
       onContextMenu={onContextMenu}
@@ -19,4 +19,4 @@ function Td({ color, content, onContextMenu }: Props) {
   );
 }
 
-export { Td };
+export { TableCell as Td };

@@ -7,10 +7,12 @@ type Props = {
 };
 
 function Modal({ show, children, onHide }: Props) {
-  const wrapperStyle = show ? {} : { display: "none" };
+  if (!show) {
+    return null;
+  }
 
   return (
-    <div style={wrapperStyle} className="modal-wrapper">
+    <div className="modal-wrapper">
       <div className="modal-background" onClick={onHide} />
       <div className="modal-container">{children}</div>
     </div>

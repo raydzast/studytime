@@ -4,7 +4,7 @@ type Props = {
   attributeNames: Array<string>;
 };
 
-function THead({ attributeNames }: Props) {
+function TableHead({ attributeNames }: Props) {
   return (
     <thead>
       <tr>
@@ -24,4 +24,4 @@ function THead({ attributeNames }: Props) {
   );
 }
 
-export { THead };
+export { TableHead };
