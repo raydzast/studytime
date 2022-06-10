@@ -23,6 +23,12 @@ function StudyInfoTable({ studyInfo, showModal, hideModal, onChange }: Props) {
       <TableHead
         attributeNames={studyInfo.attributeNames}
         scheduleSlotCount={scheduleSlotCount}
+        showModal={showModal}
+        hideModal={hideModal}
+        onChange={(newAttributeNames) => {
+          studyInfo.attributeNames = newAttributeNames;
+          onChange(studyInfo);
+        }}
       />
       <TableBody
         studyInfo={studyInfo}

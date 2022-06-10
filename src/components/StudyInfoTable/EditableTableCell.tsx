@@ -12,6 +12,7 @@ type Props = {
   onChange: (newValue: TTableCellValue) => void;
   onDelete?: () => void;
   withColor?: boolean;
+  isHeader?: boolean;
 };
 
 class EditableTableCell extends React.Component<Props> {
@@ -32,10 +33,13 @@ class EditableTableCell extends React.Component<Props> {
   };
 
   render() {
+    const { value, isHeader } = this.props;
+
     return (
       <TableCell
-        value={this.props.value}
+        value={value}
         onContextMenu={this.handleContextMenu}
+        isHeader={isHeader}
       />
     );
   }
