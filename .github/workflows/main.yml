@@ -24,6 +24,7 @@ jobs:
     - name: Update branch
       run: |
         mv public/ ../
+        git fetch --all
         git checkout gh-pages
         mv .git/ ../public/.git
         cd ../public
