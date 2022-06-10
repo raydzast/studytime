@@ -2,12 +2,14 @@ import * as React from "react";
 
 type Props = {
   attributeNames: Array<string>;
+  scheduleSlotCount: number;
 };
 
-function TableHead({ attributeNames }: Props) {
+function TableHead({ attributeNames, scheduleSlotCount }: Props) {
   return (
     <thead>
       <tr>
+        <th></th>
         <th>
           <p>Дисциплина</p>
         </th>
@@ -16,7 +18,7 @@ function TableHead({ attributeNames }: Props) {
             <p>{attributeName}</p>
           </th>
         ))}
-        <th>
+        <th colSpan={scheduleSlotCount + 1}>
           <p>Список</p>
         </th>
       </tr>

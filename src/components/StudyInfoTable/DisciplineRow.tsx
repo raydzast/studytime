@@ -4,6 +4,7 @@ import { TDiscipline } from "../../types/StudyInfo";
 import { EditableTableCell } from "./EditableTableCell";
 import { TableCellDialog } from "./TableCellDialog";
 import { TableCell } from "./TableCell";
+import { DraggableTableRow } from "./DraggableTableRow";
 
 type Props = {
   discipline: TDiscipline;
@@ -13,6 +14,8 @@ type Props = {
   hideModal: () => void;
   onChange: (discipline: TDiscipline) => void;
   onDelete: () => void;
+  onDragStart: () => void;
+  onDrop: () => void;
 };
 
 class DisciplineRow extends React.Component<Props> {
@@ -78,10 +81,18 @@ class DisciplineRow extends React.Component<Props> {
   };
 
   render() {
-    const { discipline, showModal, hideModal, onChange, onDelete } = this.props;
+    const {
+      discipline,
+      showModal,
+      hideModal,
+      onChange,
+      onDelete,
+      onDragStart,
+      onDrop,
+    } = this.props;
 
     return (
-      <tr>
+      <DraggableTableRow onDragStart={onDragStart} onDrop={onDrop}>
         <EditableTableCell
           value={{ color: discipline.color, content: discipline.name }}
           showModal={showModal}
@@ -95,11 +106,11 @@ class DisciplineRow extends React.Component<Props> {
         />
         {this.renderAttributeCells()}
         {this.renderScheduleEntries()}
-        <td className="table-add-button" onClick={this.handleAddClick}>
+        <td className="white-bg table-add-button" onClick={this.handleAddClick}>
           +
         </td>
         {this.renderEmptyEntries()}
-      </tr>
+      </DraggableTableRow>
     );
   }
 }

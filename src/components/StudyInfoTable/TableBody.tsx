@@ -6,36 +6,43 @@ import { TableCellDialog } from "./TableCellDialog";
 
 type Props = {
   studyInfo: TStudyInfo;
+  scheduleSlotCount: number;
   showModal: (renderChildren: () => React.ReactNode) => void;
   hideModal: () => void;
   onChange: (newStudyInfo: TStudyInfo) => void;
 };
 
-class TableBody extends React.Component<Props> {
+type State = {
+  draggedRowIdx: number | null;
+};
+
+class TableBody extends React.Component<Props, State> {
+  readonly state: State = {
+    draggedRowIdx: null,
+  };
+
   handleAddClick = () => {
     const { studyInfo, onChange, showModal, hideModal } = this.props;
 
     showModal(() => {
-      return <TableCellDialog 
-        onChange={(value) => {
-          const newDiscipline = new TDiscipline();
-          newDiscipline.name = value.content;
-          newDiscipline.color = value.color;
-          studyInfo.disciplines.push(newDiscipline);
-          onChange(studyInfo);
-        }}
-        hideModal={hideModal}
-      />;
+      return (
+        <TableCellDialog
+          onChange={(value) => {
+            const newDiscipline = new TDiscipline();
+            newDiscipline.name = value.content;
+            newDiscipline.color = value.color;
+            studyInfo.disciplines.push(newDiscipline);
+            onChange(studyInfo);
+          }}
+          hideModal={hideModal}
+        />
+      );
     });
   };
 
   render() {
-    const { studyInfo, showModal, hideModal, onChange } = this.props;
+    const { studyInfo, scheduleSlotCount, showModal, hideModal, onChange } = this.props;
     const { disciplines, attributeNames } = studyInfo;
-    const scheduleSlotCount =
-      disciplines.length === 0
-        ? 0
-        : Math.max(...disciplines.map(({ schedule }) => schedule.length));
 
     return (
       <tbody>
@@ -53,6 +60,21 @@ class TableBody extends React.Component<Props> {
             }}
             onDelete={() => {
               studyInfo.disciplines.splice(idx, 1);
+              onChange(studyInfo);
+            }}
+            onDragStart={() => {
+              this.setState({ draggedRowIdx: idx });
+            }}
+            onDrop={() => {
+              this.setState({ draggedRowIdx: null });
+
+              const { disciplines } = studyInfo;
+              const [from, to] = [this.state.draggedRowIdx, idx];
+              const draggedElement = disciplines[from];
+
+              disciplines.splice(from, 1);
+              disciplines.splice(to, 0, draggedElement);
+
               onChange(studyInfo);
             }}
           />
