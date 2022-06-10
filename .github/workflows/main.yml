@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: Build & push to gh-pages branch
 
 on:
   push:
@@ -20,3 +20,14 @@ jobs:
       run: |
         yarn install
         npm run build.p
+        
+    - name: Update branch
+      run: |
+        mv public/ ../
+        git checkout gh-pages
+        mv .git/ ../public/.git
+        cd ../public
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git commit -m "generated"
