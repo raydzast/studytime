@@ -12,11 +12,17 @@ type Props = {
 function TableCell({ value, onContextMenu, isHeader }: Props) {
   const { color, content } = value || {};
 
+  const convertedHtml = new showdown.Converter().makeHtml(content) || "";
+  const innerHtml = convertedHtml.replace(
+    /<a/g,
+    '$& target="_blank" rel="noreferrer noopener"'
+  );
+
   const innerProps = {
     onContextMenu: onContextMenu,
     className: `${color || "white"}-bg`,
     dangerouslySetInnerHTML: {
-      __html: new showdown.Converter().makeHtml(content),
+      __html: innerHtml,
     },
   };
 
