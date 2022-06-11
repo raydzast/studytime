@@ -109,19 +109,28 @@ tr.drag-over td {
   position: relative;
 }
 
-tr.drag-over {
+tr.drag-over,
+tr.dragged {
   &::after {
     content: "";
     position: absolute;
     display: block;
-    background: rgba($color: blue, $alpha: 0.7);
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
   }
+}
 
-  &.dragged::after {
-    background: rgba($color:  gray, $alpha: 0.7);
+tr.drag-over::after {
+  background: rgba($color: blue, $alpha: 0.7);
+}
+
+tr.dragged {
+  &,
+  &.drag-over {
+    ::after {
+      background: rgba($color:  gray, $alpha: 0.7);
+    }
   }
 }
