@@ -1,6 +1,6 @@
 const CACHE_NAME = "offline";
 
-const BASE_URL = location.origin;
+const BASE_URL = "https://raydzast.github.io/studytime";
 const URLS_TO_SAVE = ["/index.html", "/dist/main.js", "/favicon.ico"];
 
 self.addEventListener("install", (event) => {
